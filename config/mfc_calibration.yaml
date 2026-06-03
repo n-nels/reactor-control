@@ -77,7 +77,6 @@ mfc_calibrations:
       - 138.16
       - 0.0
 
-
   # COM4 Channel 3 - O2
   - port: COM4
     channel: 3
