@@ -754,10 +754,11 @@ if __name__ == "__main__":
     result = flow_control.set_gas_concentrations(
         {
             "h2": 0.0,  # ppm
-            "nh3": 350.0,  # ppm
-            "no": 350.0,  # ppm
-            "o2": 10.0,  # percent
+            "nh3": 0.0,  # ppm
+            "no": 0.0,  # ppm
+            "o2": 0.0,  # percent
             "h2o": 0.0,  # percent
+            "n2": 100000
         },
         total_flow_rate=310,  # sccm total flow
         experiment_dir=Path("C:\\Data\\nelson\\2026"),
