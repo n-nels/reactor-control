@@ -6,6 +6,7 @@ from dataclasses import dataclass
 from dataclasses import asdict
 from datetime import datetime
 from pathlib import Path
+from typing import Any
 from typing import Optional
 import json
 import logging
@@ -86,7 +87,20 @@ class StepLogger:
         self._step_counter = 0
         self._output_filename = output_filename or "step_log.json"
         self._sample_metadata = sample_metadata or {}
+        self._extra_data: dict[str, Any] = {}
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+
+    def set_extra_data(self, key: str, value: Any) -> None:
+        """Set extra data to be included in the JSON payload.
+
+        Triggers an immediate write to disk.
+
+        Args:
+            key: Top-level key in the JSON payload.
+            value: Value to store (must be JSON-serializable).
+        """
+        self._extra_data[key] = value
+        self._write_json()
 
     def log_step(
         self,
@@ -172,6 +186,7 @@ class StepLogger:
             "sample": self._sample_metadata,
             "steps": [entry.to_dict() for entry in self._entries],
         }
+        payload.update(self._extra_data)
         output_path = self.output_dir / self._output_filename
 
         # Ensure output directory exists

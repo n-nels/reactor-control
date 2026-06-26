@@ -319,6 +319,7 @@ class Experiment:
         ramp_rates: list[float],
         hold_times: list[float],
         log_steps: bool = False,
+        persist_ss_ranges: bool = False,
     ) -> bool:
         """Run a multi-step temperature program."""
         self._ensure_temperature_control()
@@ -354,11 +355,23 @@ class Experiment:
             if self._experiment_dir
             else None
         )
+
+        on_hold = None
+        if persist_ss_ranges:
+
+            def _on_hold_complete(ss_ranges_so_far: list[dict]) -> None:
+                self.ss_ranges = list(ss_ranges_so_far)
+                if self._step_logger is not None:
+                    self._step_logger.set_extra_data("ss_ranges", self.ss_ranges)
+
+            on_hold = _on_hold_complete
+
         result = self._temperature_control.run_temperature_program(
             target_temps=target_temps,
             ramp_rates=ramp_rates,
             hold_times=hold_times,
             log_path=log_path,
+            on_hold_complete=on_hold,
         )
 
         if result.success:
