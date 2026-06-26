@@ -71,6 +71,7 @@ class TemperatureControl(BaseOperation):
         ramp_write_interval: Optional[float] = None,
         timeout: Optional[float] = None,
         abort_checker: Optional[Callable[[], bool]] = None,
+        on_hold_complete: Optional[Callable[[list[dict]], None]] = None,
     ) -> OperationResult:
         """Execute a multi-step temperature program.
 
@@ -83,6 +84,8 @@ class TemperatureControl(BaseOperation):
             poll_interval: Optional polling interval in seconds.
             timeout: Optional timeout in seconds.
             abort_checker: Optional callable to signal abort.
+            on_hold_complete: Optional callback invoked after each hold completes,
+                receiving the accumulated ss_ranges list.
 
         Returns:
             OperationResult with success status.
@@ -243,6 +246,9 @@ class TemperatureControl(BaseOperation):
                             "end_time": end_time.isoformat(),
                         }
                     )
+
+                    if on_hold_complete:
+                        on_hold_complete(ss_ranges)
 
                     self.log_step(
                         step_type="temperature",

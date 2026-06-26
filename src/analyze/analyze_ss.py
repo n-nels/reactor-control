@@ -355,11 +355,15 @@ def compute_conversions(
     df["n2o_sel"] = 2 * (n2o_out - inlet_n2o) / nox_consumed * 100
     df["no2_sel"] = (no2_out - inlet_no2) / nox_consumed * 100
 
-    df["n2_mean"] = (nox_consumed + (2 * (inlet_n2o - n2o_out)) + (inlet_nh3 - nh3_out)) / 2
+    df["n2_mean"] = (
+        nox_consumed + (2 * (inlet_n2o - n2o_out)) + (inlet_nh3 - nh3_out)
+    ) / 2
     df["n2_sel"] = (2 * df["n2_mean"] / nox_consumed) * 100
     df["mass_balance"] = df["n2o_sel"] + df["nh3_sel"] + df["n2_sel"]
 
-    df.loc[nox_consumed <= 0, ["n2o_sel", "no2_sel", "nh3_sel", "n2_sel", "n2_mean"]] = None
+    df.loc[
+        nox_consumed <= 0, ["n2o_sel", "no2_sel", "nh3_sel", "n2_sel", "n2_mean"]
+    ] = None
     df.loc[df["no2_sel"] <= 0, ["no2_sel"]] = None
     df.loc[df["nh3_sel"] <= 0, "nh3_sel"] = None
     df.loc[df["n2o_sel"] <= 0, "n2o_sel"] = None
@@ -418,6 +422,18 @@ def load_and_process(
 
     if data is None:
         raise ValueError(f"Failed to load experiment data for: {experiment_id}")
+
+    if not ss_ranges:
+        json_path = data_root / f"{experiment_id}.json"
+        if json_path.exists():
+            try:
+                with json_path.open("r", encoding="utf-8") as f:
+                    existing = json.load(f)
+                saved = existing.get("ss_ranges")
+                if saved:
+                    ss_ranges = saved
+            except (OSError, json.JSONDecodeError):
+                pass
 
     if ss_ranges:
         ranges = ss_ranges_to_isothermal_ranges(ss_ranges, data.ftir)

@@ -74,6 +74,7 @@ def sample_info(
 
     return exp
 
+
 def pretreatment(
     exp: Experiment,
     target_temps: list[float],
@@ -117,6 +118,7 @@ def pretreatment(
 
     return exp
 
+
 def run_steady_state(
     exp: Experiment,
     gas_flow: dict,
@@ -147,6 +149,7 @@ def run_steady_state(
         target_temps=target_temps,
         ramp_rates=ramp_rates,
         hold_times=hold_times,
+        persist_ss_ranges=True,
     )
 
     exp.stop_data_collection()
@@ -155,6 +158,7 @@ def run_steady_state(
     exp.export_to_z_drive()
 
     return exp
+
 
 def standby(exp: Experiment, standby_temp: float = 120) -> None:
     """Set system to standby mode after experiment."""
@@ -167,41 +171,41 @@ if __name__ == "__main__":
 
     def nn_exp1(standby: bool = True) -> None:
         exp = sample_info(
-            batch_id="nn2063-3",
-            mass_mg=101.0,
+            batch_id="nn2063-4",
+            mass_mg=100.0,
             operator="nelson",
-            composition="Pt/Al2O3(80)-CeO2(20)",
+            composition="Pt/Al2O3(80)-ZrO2(20)",
             metal="Pt",
-            support="g-Al2O3(80)-CeO2(20)",
+            support="g-Al2O3(80)-ZrO2(20)",
             metal_loading_wt_percent=0.1,
             mesh_size="30-60",
             is_new_sample=False,
-            synthesis_method="(NH3)4Pt(NO3)2 (100 uL, 1 wt. %) solution added to 0.5 g of Al2O3(80)-CeO2(20). Leave at RT for 48h. Dry at 60 °C for 2 h. Not calcined."
+            synthesis_method="(NH3)4Pt(NO3)2 (100 uL, 1 wt. %) solution added to 0.5 g of Al2O3(80)-ZrO2(20). Leave at RT for 48h. Dry at 60 °C for 2 h. Not calcined.",
         )
 
         exp = pretreatment(
             exp=exp,
-            target_temps=[50, 100, 150, 200, 400, 120],
+            target_temps=[600, 120],
             ramp_rates=[10],
-            hold_times=[60*1, 60*1, 60*1, 60*1, 60*1, 0],
+            hold_times=[60 * 2, 0],
             gas_flows=[
                 {
-                    "total_flow_rate": None,
+                    "total_flow_rate": 410,
                     "gas_concentrations": {
-                        "h2": 10000.0,
-                        "nh3": 0.0,
+                        "h2": 9300.0,
+                        "nh3": 1000.0,
                         "no": 0.0,
                         "o2": 0.0,
                         "h2o": 0.0,
-                        "n2": 0.0
+                        # "n2": 0.0
                     },
-                },
+                }
             ],
         )
 
         exp = run_steady_state(
             exp=exp,
-            target_temps= [120, 140, 160, 180, 200, 250, 300, 350, 400],
+            target_temps=[120, 140, 160, 180, 200, 250, 300, 350, 400],
             ramp_rates=[10],
             hold_times=[60, 30],
             gas_flow={
@@ -220,32 +224,32 @@ if __name__ == "__main__":
 
     def nn_exp2(standby: bool = True) -> None:
         exp = sample_info(
-            batch_id="nn2063-3",
-            mass_mg=101.0,
+            batch_id="nn2063-4",
+            mass_mg=100.0,
             operator="nelson",
-            composition="Pt/Al2O3(80)-CeO2(20)",
+            composition="Pt/Al2O3(80)-ZrO2(20)",
             metal="Pt",
-            support="g-Al2O3(80)-CeO2(20)",
+            support="g-Al2O3(80)-ZrO2(20)",
             metal_loading_wt_percent=0.1,
             mesh_size="30-60",
             is_new_sample=False,
-            synthesis_method="(NH3)4Pt(NO3)2 (100 uL, 1 wt. %) solution added to 0.5 g of Al2O3(80)-CeO2(20). Leave at RT for 48h. Dry at 60 °C for 2 h. Not calcined.",
+            synthesis_method="(NH3)4Pt(NO3)2 (100 uL, 1 wt. %) solution added to 0.5 g of Al2O3(80)-ZrO2(20). Leave at RT for 48h. Dry at 60 °C for 2 h. Not calcined.",
         )
 
         exp = pretreatment(
             exp=exp,
             target_temps=[550, 120],
             ramp_rates=[10.0],
-            hold_times=[2*60, 0],
+            hold_times=[2 * 60, 0],
             gas_flows=[
                 {
-                    "total_flow_rate": 200,
+                    "total_flow_rate": 410,
                     "gas_concentrations": {
-                        "h2": 0.0,
-                        "nh3": 5000.0,
-                        "no": 0.0,
+                        "h2": 5000.0,
+                        "nh3": 0.0,
+                        "no": 3000.0,
                         "o2": 0.0,
-                        "h2o": 10.0,
+                        "h2o": 0.0,
                         # "n2": 0.0
                     },
                 },
@@ -273,42 +277,87 @@ if __name__ == "__main__":
 
     def gl_exp1(standby: bool = True) -> None:
         exp = sample_info(
-            batch_id="10%-Ce0.9Mn0.1Ox-Cu-CHA-BP-HTA-10pH2O-650C-50h",
+            batch_id="1.5%-Cu-CHA-SAR4.6",
             mass_mg=100.0,
             operator="Garam",
-            composition="CeMnOx-Cu-CHA-BP-HTA-10pH2O-650C-50h",
-            metal="Ce0.9Mn0.1Ox-Cu",
+            composition="Cu-CHA-SAR4.6",
+            metal="Cu",
             support="SSZ-13",
-            metal_loading_wt_percent=2.0,
+            metal_loading_wt_percent=1.5,
             mesh_size="40-60",
             is_new_sample=True,
             synthesis_method="SSIE",
         )
 
-        # exp = pretreatment(
-        #     exp=exp,
-        #     target_temps=[200],
-        #     ramp_rates=[10.0],
-        #     hold_times=[1.0],
-        #     gas_flows=[
-        #         {
-        #             "total_flow_rate": 410,
-        #             "gas_concentrations": {
-        #                 "h2": 0.0,
-        #                 "nh3": 350.0,
-        #                 "no": 350.0,
-        #                 "o2": 10.0,
-        #                 "h2o": 6.0,
-        #             },
-        #         },
-        #     ],
-        # )
+        exp = pretreatment(
+            exp=exp,
+            target_temps=[200],
+            ramp_rates=[10.0],
+            hold_times=[1.0],
+            gas_flows=[
+                {
+                    "total_flow_rate": 310,
+                    "gas_concentrations": {
+                        "h2": 0.0,
+                        "nh3": 0.0,
+                        "no": 350.0,
+                        "o2": 10.0,
+                        "h2o": 6.0,
+                    },
+                },
+            ],
+        )
 
         exp = run_steady_state(
             exp=exp,
-            target_temps=[450, 400, 350, 300, 275, 250, 225, 200, 180, 160, 140, 120, 100, 200],
-            ramp_rates=[10.0, 10.0, 10.0, 10.0, 5.0, 5.0, 5.0, 5.0, 4.0, 4.0, 4.0, 4.0, 4.0, 10.0],
-            hold_times=[50.0, 45.0, 45.0, 45.0, 45.0, 45.0, 55.0, 60.0, 45.0, 45.0, 40.0, 40.0, 40.0, 2.0],
+            target_temps=[
+                450,
+                400,
+                350,
+                300,
+                275,
+                250,
+                225,
+                200,
+                180,
+                160,
+                140,
+                120,
+                100,
+                200,
+            ],
+            ramp_rates=[
+                10.0,
+                10.0,
+                10.0,
+                10.0,
+                5.0,
+                5.0,
+                5.0,
+                5.0,
+                4.0,
+                4.0,
+                4.0,
+                4.0,
+                4.0,
+                10.0,
+            ],
+            hold_times=[
+                50.0,
+                45.0,
+                45.0,
+                45.0,
+                45.0,
+                45.0,
+                55.0,
+                60.0,
+                45.0,
+                45.0,
+                40.0,
+                40.0,
+                40.0,
+                2.0,
+            ],
             gas_flow={
                 "total_flow_rate": 410,
                 "gas_concentrations": {
@@ -360,7 +409,20 @@ if __name__ == "__main__":
             exp=exp,
             target_temps=[400, 350, 300, 275, 250, 225, 200, 180, 160, 140, 120, 100],
             ramp_rates=[10.0, 10.0, 10.0, 5.0, 5.0, 5.0, 5.0, 4.0, 4.0, 4.0, 4.0, 4.0],
-            hold_times=[45.0, 45.0, 45.0, 45.0, 45.0, 55.0, 60.0, 45.0, 45.0, 40.0, 40.0, 40.0],
+            hold_times=[
+                45.0,
+                45.0,
+                45.0,
+                45.0,
+                45.0,
+                55.0,
+                60.0,
+                45.0,
+                45.0,
+                40.0,
+                40.0,
+                40.0,
+            ],
             gas_flow={
                 "total_flow_rate": 410,
                 "gas_concentrations": {
@@ -427,10 +489,9 @@ if __name__ == "__main__":
 
         exp.standby() if standby else exp.close()
 
-
     nn_exp1(standby=False)
     nn_exp2(standby=True)
-    # gl_exp1(standby=False)
+    # gl_exp1(standby=True)
     # gl_exp2(standby=True)
     # test()
 
