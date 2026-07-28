@@ -688,7 +688,7 @@ if __name__ == "__main__":
     val = controller.get_temperature()  # read current temp
     print(f"Current Temperature: {val} °C")
 
-    temp_control.set_temperature(50)  # set single temp with defaults
+    temp_control.set_temperature(120)  # set single temp with defaults
 
     # result = temp_control.run_temperature_program(
     #      target_temps=[450, 300],  # °C
