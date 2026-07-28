@@ -462,4 +462,4 @@ def load_and_process(
 
 
 if __name__ == "__main__":
-    ss_df = load_and_process("20260518_150042_steady-state")
+    ss_df = load_and_process("20260715_111541_steady-state")

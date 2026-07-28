@@ -756,11 +756,11 @@ if __name__ == "__main__":
             "h2": 0.0,  # ppm
             "nh3": 0.0,  # ppm
             "no": 0.0,  # ppm
-            "o2": 0.0,  # percent
+            "o2": 10.0,  # percent
             "h2o": 0.0,  # percent
-            "n2": 100000
+            # "n2": 0.0
         },
-        total_flow_rate=310,  # sccm total flow
+        total_flow_rate=410,  # sccm total flow
         experiment_dir=Path("C:\\Data\\nelson\\2026"),
     )
 

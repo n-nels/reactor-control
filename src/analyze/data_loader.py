@@ -81,7 +81,7 @@ def _parse_ftir_datetime(date_str: str, time_str: str) -> datetime:
         except ValueError:
             continue
     raise ValueError(
-        f"Unsupported FTIR datetime format: '{dt_str}'. Expected one of {formats}"
+        f"Unsupported FTIR datetime format: '{date_str} {time_str}'. Expected one of {formats}"
     )
 
 

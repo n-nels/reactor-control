@@ -171,33 +171,33 @@ if __name__ == "__main__":
 
     def nn_exp1(standby: bool = True) -> None:
         exp = sample_info(
-            batch_id="nn2063-4",
-            mass_mg=100.0,
+            batch_id="nn2063-5",
+            mass_mg=103.5,
             operator="nelson",
-            composition="Pt/Al2O3(80)-ZrO2(20)",
+            composition="Pt/TiO2",
             metal="Pt",
-            support="g-Al2O3(80)-ZrO2(20)",
+            support="TiO2",
             metal_loading_wt_percent=0.1,
             mesh_size="30-60",
-            is_new_sample=False,
-            synthesis_method="(NH3)4Pt(NO3)2 (100 uL, 1 wt. %) solution added to 0.5 g of Al2O3(80)-ZrO2(20). Leave at RT for 48h. Dry at 60 °C for 2 h. Not calcined.",
+            is_new_sample=True,
+            synthesis_method="(NH3)4Pt(NO3)2 (100 uL, 1 wt. %) solution added to 0.5 g of TiO2. Leave at RT for 48h. Dry at 60 °C for 2 h. Not calcined.",
         )
 
         exp = pretreatment(
             exp=exp,
-            target_temps=[600, 120],
+            target_temps=[525, 120],
             ramp_rates=[10],
-            hold_times=[60 * 2, 0],
+            hold_times=[60*3.5, 0],
             gas_flows=[
                 {
-                    "total_flow_rate": 410,
+                    "total_flow_rate": 200,
                     "gas_concentrations": {
-                        "h2": 9300.0,
-                        "nh3": 1000.0,
-                        "no": 0.0,
+                        "h2": 10000.0,
+                        "nh3": 0.0,
+                        "no": 2800.0,
                         "o2": 0.0,
                         "h2o": 0.0,
-                        # "n2": 0.0
+                        "n2": 0.0
                     },
                 }
             ],
@@ -224,33 +224,33 @@ if __name__ == "__main__":
 
     def nn_exp2(standby: bool = True) -> None:
         exp = sample_info(
-            batch_id="nn2063-4",
-            mass_mg=100.0,
+            batch_id="nn2063-5",
+            mass_mg=103.5,
             operator="nelson",
-            composition="Pt/Al2O3(80)-ZrO2(20)",
+            composition="Pt/TiO2",
             metal="Pt",
-            support="g-Al2O3(80)-ZrO2(20)",
+            support="TiO2",
             metal_loading_wt_percent=0.1,
             mesh_size="30-60",
             is_new_sample=False,
-            synthesis_method="(NH3)4Pt(NO3)2 (100 uL, 1 wt. %) solution added to 0.5 g of Al2O3(80)-ZrO2(20). Leave at RT for 48h. Dry at 60 °C for 2 h. Not calcined.",
+            synthesis_method="(NH3)4Pt(NO3)2 (100 uL, 1 wt. %) solution added to 0.5 g of TiO2. Leave at RT for 48h. Dry at 60 °C for 2 h. Not calcined.",
         )
 
         exp = pretreatment(
             exp=exp,
-            target_temps=[550, 120],
+            target_temps=[500, 120],
             ramp_rates=[10.0],
             hold_times=[2 * 60, 0],
             gas_flows=[
                 {
-                    "total_flow_rate": 410,
+                    "total_flow_rate": 200,
                     "gas_concentrations": {
-                        "h2": 5000.0,
+                        "h2": 0.0,
                         "nh3": 0.0,
-                        "no": 3000.0,
-                        "o2": 0.0,
+                        "no": 0.0,
+                        "o2": 40.0,
                         "h2o": 0.0,
-                        # "n2": 0.0
+                        "n2": 0.0
                     },
                 },
             ],
@@ -277,16 +277,16 @@ if __name__ == "__main__":
 
     def gl_exp1(standby: bool = True) -> None:
         exp = sample_info(
-            batch_id="1.5%-Cu-CHA-SAR4.6",
-            mass_mg=100.0,
+            batch_id="0.01% Ru-10% CeO2-Cu-CHA-BP",
+            mass_mg=110.0,
             operator="Garam",
-            composition="Cu-CHA-SAR4.6",
-            metal="Cu",
+            composition="Ru-CeO2-Cu-CHA-SAR12",
+            metal="Ru + Cu",
             support="SSZ-13",
-            metal_loading_wt_percent=1.5,
+            metal_loading_wt_percent=2,
             mesh_size="40-60",
             is_new_sample=True,
-            synthesis_method="SSIE",
+            synthesis_method="Co-IWI of Ru and CeO2 over AIE Cu-CHA; 0.01% Ru and 10% CeO2; Pelletize and Crush to 40-60 mesh",
         )
 
         exp = pretreatment(
@@ -365,7 +365,7 @@ if __name__ == "__main__":
                     "nh3": 350.0,
                     "no": 350.0,
                     "o2": 10.0,
-                    "h2o": 6.0,
+                    "h2o": 20.0,
                 },
             },
         )
@@ -374,16 +374,16 @@ if __name__ == "__main__":
 
     def gl_exp2(standby: bool = True) -> None:
         exp = sample_info(
-            batch_id="10%-Ce0.9Mn0.1Ox-Cu-CHA-BP-HTA-10pH2O-650C-50h",
-            mass_mg=100.0,
+            batch_id="0.01% Ru-10% CeO2-Cu-CHA-BP",
+            mass_mg=110.0,
             operator="Garam",
-            composition="CeMnOx-Cu-CHA-BP-HTA-10pH2O-650C-50h",
-            metal="Ce0.9Mn0.1Ox-Cu",
+            composition="Ru-CeO2-Cu-CHA-SAR12",
+            metal="Ru + Cu",
             support="SSZ-13",
-            metal_loading_wt_percent=2.0,
+            metal_loading_wt_percent=2,
             mesh_size="40-60",
             is_new_sample=True,
-            synthesis_method="SSIE",
+            synthesis_method="Co-IWI of Ru and CeO2 over AIE Cu-CHA; 0.01% Ru and 10% CeO2; Pelletize and Crush to 40-60 mesh",
         )
 
         # exp = pretreatment(
@@ -393,13 +393,13 @@ if __name__ == "__main__":
         #     hold_times=[5.0],
         #     gas_flows=[
         #         {
-        #             "total_flow_rate": 410,
+        #             "total_flow_rate": 310,
         #             "gas_concentrations": {
         #                 "h2": 0.0,
-        #                 "nh3": 350.0,
+        #                 "nh3": 0.0,
         #                 "no": 350.0,
         #                 "o2": 10.0,
-        #                 "h2o": 20.0,
+        #                 "h2o": 6.0,
         #             },
         #         },
         #     ],
@@ -407,9 +407,40 @@ if __name__ == "__main__":
 
         exp = run_steady_state(
             exp=exp,
-            target_temps=[400, 350, 300, 275, 250, 225, 200, 180, 160, 140, 120, 100],
-            ramp_rates=[10.0, 10.0, 10.0, 5.0, 5.0, 5.0, 5.0, 4.0, 4.0, 4.0, 4.0, 4.0],
+            target_temps=[
+                450,
+                400,
+                350,
+                300,
+                275,
+                250,
+                225,
+                200,
+                180,
+                160,
+                140,
+                120,
+                100,
+                200,
+            ],
+            ramp_rates=[
+                10.0,
+                10.0,
+                10.0,
+                10.0,
+                5.0,
+                5.0,
+                5.0,
+                5.0,
+                4.0,
+                4.0,
+                4.0,
+                4.0,
+                4.0,
+                10.0,
+            ],
             hold_times=[
+                50.0,
                 45.0,
                 45.0,
                 45.0,
@@ -422,6 +453,7 @@ if __name__ == "__main__":
                 40.0,
                 40.0,
                 40.0,
+                2.0,
             ],
             gas_flow={
                 "total_flow_rate": 410,
@@ -500,8 +532,8 @@ if __name__ == "__main__":
 Open Items:
 1. if sample info exists, don't write.
 2. NO=0 writes to 0.1
-3. Need to write ss times in real-time to avoid data loss.
-4. Check NO2 and N2 selectivity/mean in analyze_ss.py
+3. Check NO2 and N2 selectivity/mean in analyze_ss.py
+4. Step 0 on sequentially run still has residual flow from the previoius mfc, e.g. H2=47.8 when it should be 0.0
 
 From GL
 1. If the total flow rate cannot reach the set value, does it not set the MFC openings to the set values? I was using 350 ppm NO, 10% O2, and 6% H2O as pretreatment, only NO and O2 were set to the correct values, but not H2O (HPLC pump not turned on) and N2 (at the standby value of 10%)
