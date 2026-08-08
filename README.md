@@ -2,6 +2,8 @@
 
 A Python-based control system for laboratory reactors, supporting gas flow control, temperature management, and experimental automation.
 
+![Reactor system](docs/images/20260511_113825.jpg)
+
 ## Features
 
 - **Multi-device control**: Brooks Mass Flow Controllers (MFC), HPLC pumps, Omega CN7600 temperature controllers, MKS ToolWEB pressure monitoring
