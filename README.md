@@ -2,7 +2,7 @@
 
 A Python-based control system for laboratory reactors, supporting gas flow control, temperature management, and experimental automation.
 
-![Reactor system](docs/images/20260511_113825.jpg)
+![Reactor system](images/20260511_113825.jpg)
 
 ## Features
 
