@@ -753,11 +753,11 @@ if __name__ == "__main__":
 
     result = flow_control.set_gas_concentrations(
         {
-            "h2": 0.0,  # ppm
+            "h2": 9300.0,  # ppm
             "nh3": 0.0,  # ppm
-            "no": 0.0,  # ppm
+            "no": 350.0,  # ppm
             "o2": 10.0,  # percent
-            "h2o": 0.0,  # percent
+            "h2o": 20.0,  # percent
             # "n2": 0.0
         },
         total_flow_rate=410,  # sccm total flow
