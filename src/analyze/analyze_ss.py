@@ -279,6 +279,7 @@ def get_steady_state_df(
     ranges: list[IsothermalRange],
     species: list[str] | None = None,
     fraction: float = 0.1,
+    temp_col: str = "aligned_read_temp",
 ) -> pd.DataFrame:
     """Get steady-state data as a DataFrame for easy plotting.
 
@@ -287,6 +288,7 @@ def get_steady_state_df(
         ranges: List of isothermal ranges.
         species: List of species to extract.
         fraction: Fraction of range to use for calculation.
+        temp_col: Name of temperature column.
 
     Returns:
         DataFrame with columns: temp_mean, temp_std, {species}_mean, {species}_std.
@@ -301,9 +303,15 @@ def get_steady_state_df(
 
     for i in range(n_ranges):
         r = ranges[i]
+        n_total = r.end_idx - r.start_idx + 1
+        n_use = max(1, int(round(n_total * fraction)))
+        start_idx = r.end_idx - n_use + 1
+        end_idx = r.end_idx + 1
+        temp_subset = ftir_df[temp_col].iloc[start_idx:end_idx]
+
         row = {
-            "temp_mean": r.mean_temp,
-            "temp_std": r.std_temp,
+            "temp_mean": float(temp_subset.mean()),
+            "temp_std": float(temp_subset.std()) if len(temp_subset) > 1 else 0.0,
         }
 
         for sp in species:
