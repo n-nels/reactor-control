@@ -445,9 +445,7 @@ Open Items:
 2. NO=0 writes to 0.1
 3. Check NO2 and N2 selectivity/mean in analyze_ss.py
 4. Step 0 on sequentially run still has residual flow from the previoius mfc, e.g. H2=47.8 when it should be 0.0
-5. The acquisition should not start until the read temp matches the target temperature. Right now, it is the write temp. But pretreatment works great.
 6. Need longer rest time to read gas concentrations accurately.
-7. The reported average temperature is over the full 30 minutes and not the steady state period.
 
 From GL
 1. If the total flow rate cannot reach the set value, does it not set the MFC openings to the set values? I was using 350 ppm NO, 10% O2, and 6% H2O as pretreatment, only NO and O2 were set to the correct values, but not H2O (HPLC pump not turned on) and N2 (at the standby value of 10%)

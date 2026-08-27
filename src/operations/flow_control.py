@@ -310,8 +310,8 @@ class FlowControl(BaseOperation):
     ) -> dict[str, float]:
         """Read actual gas concentrations from MFCs.
 
-        Polls the MFC until the read value is within tolerance of the set value,
-        or until timeout (10 seconds).
+        Polls the MFC until two consecutive identical readings are obtained,
+        or until timeout (60 seconds).
 
         Args:
             gas_flows: Dictionary of gas flows that were set.
@@ -324,8 +324,8 @@ class FlowControl(BaseOperation):
         offset = None
 
         # Polling parameters
-        max_wait_seconds = 20.0
-        poll_interval = 2  # seconds between polls
+        max_wait_seconds = 60.0
+        poll_interval = 10  # seconds between polls
         tolerance_percent = 1.0  # ±1% of target is acceptable
 
         for gas_name, flow_sccm in gas_flows.items():
@@ -386,16 +386,13 @@ class FlowControl(BaseOperation):
                     time.sleep(poll_interval)
                     continue
 
-                # Check for two consecutive identical readings (within tolerance)
+                # Check for two consecutive identical readings
                 if target_percent > 0:
                     diff_percent = (
                         abs(actual_percent - target_percent) / target_percent * 100
                     )
                     if diff_percent <= tolerance_percent:
-                        if (
-                            last_percent is not None
-                            and abs(actual_percent - last_percent) < 0.1
-                        ):
+                        if last_percent is not None and actual_percent == last_percent:
                             stable_count += 1
                             if stable_count >= 2:
                                 break
@@ -404,10 +401,7 @@ class FlowControl(BaseOperation):
                     else:
                         stable_count = 0
                 elif actual_percent <= 1.0:  # Close to zero
-                    if (
-                        last_percent is not None
-                        and abs(actual_percent - last_percent) == 0.0
-                    ):
+                    if last_percent is not None and actual_percent == last_percent:
                         stable_count += 1
                         if stable_count >= 2:
                             break
